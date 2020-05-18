@@ -20,8 +20,10 @@ class PhoneBookController extends AbstractController
      */
     public function index(PhoneBookRepository $phoneBookRepository): Response
     {
+        $user = $this->getUser();
+
         return $this->render('phone_book/index.html.twig', [
-            'phone_books' => $phoneBookRepository->findAll(),
+            'phone_books' => $user->getPhoneBook(),
         ]);
     }
 
@@ -36,6 +38,7 @@ class PhoneBookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $phoneBook->addUser($this->getUser());
             $entityManager->persist($phoneBook);
             $entityManager->flush();
 
