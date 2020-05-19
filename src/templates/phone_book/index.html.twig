@@ -3,7 +3,7 @@
 {% block title %}PhoneBook index{% endblock %}
 
 {% block body %}
-    <h1>PhoneBook index</h1>
+    <h1>Your number list</h1>
 
     <table class="table">
         <thead>
@@ -17,12 +17,11 @@
         <tbody>
         {% for phone_book in phone_books %}
             <tr>
-                <td>{{ phone_book.id }}</td>
                 <td>{{ phone_book.name }}</td>
                 <td>{{ phone_book.phone }}</td>
                 <td>
-                    <a href="{{ path('phone_book_show', {'id': phone_book.id}) }}">show</a>
-                    <a href="{{ path('phone_book_edit', {'id': phone_book.id}) }}">edit</a>
+                    <a class="btn btn-secondary" href="{{ path('phone_book_show', {'id': phone_book.id}) }}">show</a>
+                    <a class="btn btn-secondary" href="{{ path('phone_book_edit', {'id': phone_book.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +32,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('phone_book_new') }}">Create new</a>
+    <a class="btn btn-secondary" href="{{ path('phone_book_new') }}">Create new</a>
 {% endblock %}
