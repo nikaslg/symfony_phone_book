@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\PhoneBook;
+use App\Entity\User;
 use App\Form\PhoneBookType;
 use App\Repository\PhoneBookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * @Route("/phonebook")
@@ -57,6 +60,7 @@ class PhoneBookController extends AbstractController
     public function show(PhoneBook $phoneBook): Response
     {
         return $this->render('phone_book/show.html.twig', [
+            'users' => $phoneBook->getUsers(),
             'phone_book' => $phoneBook,
         ]);
     }
@@ -66,10 +70,14 @@ class PhoneBookController extends AbstractController
      */
     public function edit(Request $request, PhoneBook $phoneBook): Response
     {
+        $this->denyAccessUnlessGranted('CAN_EDIT', $phoneBook);
+
         $form = $this->createForm(PhoneBookType::class, $phoneBook);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('phone_book_index');
