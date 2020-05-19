@@ -1,7 +1,7 @@
 # symfony_phone_book
 
 
-https://gitlab.com/martinpham/symfony-5-docker
-
-For now need to chown host database to ${USER}
-On mac os should work fine.
+git clone https://github.com/nikaslg/symfony_phone_book.git
+cd symfony_phone_book/docker
+docker-compose up 
+pray
